@@ -1,46 +1,70 @@
 // script.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
-    const options = {
-        threshold: 0.1
-    };
+    const links = document.querySelectorAll('.navbar a');
+    const indicator = document.querySelector('.nav-indicator');
 
-    const observer = new IntersectionObserver((entries) => {
+    // Intersection Observer – pokazywanie sekcji
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
             }
         });
-    }, options);
+    }, { threshold: 0.15 });
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+    sections.forEach(sec => observer.observe(sec));
 
-    // Smooth scroll dla nawigacji
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    // Płynne przewijanie + aktualizacja active i wskaźnika
+    links.forEach(link => {
+        link.addEventListener('click', e => {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
+            const targetId = link.getAttribute('href');
+            document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
 
-            // Ustaw active class
-            document.querySelectorAll('.navbar a').forEach(a => a.classList.remove('active'));
-            this.classList.add('active');
+            // usuń stare active
+            links.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            moveIndicator(link);
         });
     });
 
-    // Ustaw initial active na podstawie hash
-    if (window.location.hash) {
-        const activeLink = document.querySelector(`.navbar a[href="${window.location.hash}"]`);
-        if (activeLink) {
-            document.querySelectorAll('.navbar a').forEach(a => a.classList.remove('active'));
-            activeLink.classList.add('active');
-        }
-    }
-});
+    // Ruch wskaźnika przy scrollu
+    const moveIndicator = (targetLink) => {
+        const rect = targetLink.getBoundingClientRect();
+        const navRect = targetLink.closest('.navbar').getBoundingClientRect();
 
-// Dla optymalizacji: możesz minifikować ten plik ręcznie lub użyć narzędzi jak UglifyJS
+        indicator.style.width = `${rect.width + 12}px`;
+        indicator.style.left = `${rect.left - navRect.left - 6}px`;
+    };
+
+    // Inicjalne ustawienie wskaźnika
+    const activeLink = document.querySelector('.navbar a.active') || links[0];
+    activeLink.classList.add('active');
+    moveIndicator(activeLink);
+
+    // Aktualizacja przy scrollu (scrollspy)
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= sectionTop - 150) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        links.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+                moveIndicator(link);
+            }
+        });
+    });
+
+    // Na resize też aktualizujemy wskaźnik
+    window.addEventListener('resize', () => {
+        moveIndicator(document.querySelector('.navbar a.active'));
+    });
+});
