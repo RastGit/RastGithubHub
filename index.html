@@ -39,49 +39,55 @@
 </section>
 
 <div class="lightning-container">
-  <svg class="lightning-svg" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+  <svg class="lightning-svg" viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <filter id="neonglow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="5"  result="blur1"/>
-        <feGaussianBlur stdDeviation="12" result="blur2"/>
+      <!-- Mocny neonowy glow -->
+      <filter id="neon-glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="6"  result="blur-a"/>
+        <feGaussianBlur stdDeviation="14" result="blur-b"/>
+        <feGaussianBlur stdDeviation="24" result="blur-c"/>
         <feMerge>
-          <feMergeNode in="blur2"/>
-          <feMergeNode in="blur1"/>
+          <feMergeNode in="blur-c"/>
+          <feMergeNode in="blur-b"/>
+          <feMergeNode in="blur-a"/>
           <feMergeNode in="SourceGraphic"/>
         </feMerge>
       </filter>
 
-      <linearGradient id="boltgradient" x1="50%" y1="0%" x2="50%" y2="100%">
-        <stop offset="0%"   stop-color="#f06292" />     <!-- jasny róż-fiolet góra -->
-        <stop offset="35%"  stop-color="#d500f9" />     <!-- jasny fiolet -->
-        <stop offset="65%"  stop-color="#9c27b0" />     <!-- średni fiolet -->
-        <stop offset="100%" stop-color="#4a148c" />     <!-- ciemny fiolet dół/środek -->
+      <!-- Gradient rurki neonowej: jasny → średni → ciemny fiolet -->
+      <linearGradient id="neon-tube" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%"   stop-color="#ff4da6" />    <!-- jasny róż-fiolet góra -->
+        <stop offset="40%"  stop-color="#d500f9" />    <!-- jasny fiolet -->
+        <stop offset="75%"  stop-color="#7c00ff" />    <!-- średni fiolet -->
+        <stop offset="100%" stop-color="#3c0066" />    <!-- bardzo ciemny fiolet/rdzeń -->
       </linearGradient>
 
-      <radialGradient id="coreglow" cx="50%" cy="50%" r="90%">
-        <stop offset="0%" stop-color="#ffffff44" />
-        <stop offset="70%" stop-color="#ffffff00" />
+      <!-- Wewnętrzne światło (biało-fioletowa poświata w środku rurki) -->
+      <radialGradient id="inner-light" cx="50%" cy="30%" r="120%">
+        <stop offset="0%" stop-color="#ffffff66" />
+        <stop offset="40%" stop-color="#e0bbff44" />
+        <stop offset="100%" stop-color="#00000000" />
       </radialGradient>
     </defs>
 
-    <!-- główna neonowa "rurka" -->
+    <!-- Główna gruba neonowa błyskawica -->
     <path
-      d="M 50 10 L 28 68 L 72 68 L 38 122 L 62 122 L 30 158"
+      d="M 60 15 L 35 55 L 85 55 L 45 95 L 75 95 L 40 135 L 90 135 L 50 175"
       fill="none"
-      stroke="url(#boltgradient)"
-      stroke-width="16"
+      stroke="url(#neon-tube)"
+      stroke-width="22"
       stroke-linecap="round"
       stroke-linejoin="round"
-      filter="url(#neonglow)"
+      filter="url(#neon-glow)"
     />
 
-    <!-- biała / jasna poświata w środku (imitacja neonowego światła wewnątrz) -->
+    <!-- Wewnętrzna poświata / światło neonu -->
     <path
-      d="M 50 10 L 28 68 L 72 68 L 38 122 L 62 122 L 30 158"
+      d="M 60 15 L 35 55 L 85 55 L 45 95 L 75 95 L 40 135 L 90 135 L 50 175"
       fill="none"
-      stroke="url(#coreglow)"
-      stroke-width="9"
-      opacity="0.75"
+      stroke="url(#inner-light)"
+      stroke-width="12"
+      opacity="0.85"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
