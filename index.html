@@ -30,16 +30,29 @@
 
 <section id="textbypass" class="section">
   <h1>TextBypass</h1>
-  <p>Sekcja do omijania filtrów, detektorów AI i innych ograniczeń tekstowych.</p>
-  <textarea id="inputText" placeholder="Wklej tekst do bypassu" rows="5" cols="50"></textarea>
-  <div class="options">
-    <label><input type="checkbox" id="useNumbers"> Numbers (użyj numerów jak leet speak)</label>
-    <label><input type="checkbox" id="useFont"> Font (różne czcionki, np. math bold)</label>
-    <label><input type="checkbox" id="useSimilar"> Similar (podobne znaki, homoglyphs)</label>
+  <p>Omijaj filtry, detektory AI, moderacje i inne ograniczenia tekstowe.</p>
+
+  <div class="bypass-container">
+    <textarea id="inputText" placeholder="Wklej tekst do bypassu..." rows="6"></textarea>
+
+    <div class="options-grid">
+      <label class="option-label">
+        <input type="checkbox" id="useNumbers"> Numbers (leet speak – 1 zamiast i, 3 zamiast e itp.)
+      </label>
+      <label class="option-label">
+        <input type="checkbox" id="useFont"> Font (matematyczne czcionki, bold, italic, gothic itp.)
+      </label>
+      <label class="option-label">
+        <input type="checkbox" id="useSimilar"> Similar (podobne znaki / homoglyphs)
+      </label>
+    </div>
+
+    <button id="bypassBtn">BYPASS TEXT</button>
+
+    <textarea id="outputText" placeholder="Tutaj pojawi się zbypassowany tekst..." rows="6" readonly></textarea>
+
+    <button id="copyBtn">Copy 📋</button>
   </div>
-  <button id="bypassBtn">Bypass Text</button>
-  <textarea id="outputText" placeholder="Zbypassowany tekst" rows="5" cols="50" readonly></textarea>
-  <button id="copyBtn">Copy 📋</button>
 </section>
 
 <section id="ai" class="section">
@@ -47,7 +60,6 @@
   <p>Prompty, modele, triki, fine-tuning – wszystko co związane z sztuczną inteligencją.</p>
 </section>
 
-<script src="ai_bypass.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
