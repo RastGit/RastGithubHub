@@ -106,28 +106,39 @@ p {
   opacity: 0.93;
 }
 
-/* Neonowy piorun – teraz naprawdę gruby i neonowy */
-.lightning-container {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  width: 110px;
-  height: 180px;
-  z-index: 1000;
-  perspective: 1800px;
+/* Styl for TextBypass section */
+#textbypass textarea {
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #8b008b;
+  border-radius: 5px;
 }
 
-.lightning-svg {
-  width: 100%;
-  height: 100%;
-  animation: spin3D 20s linear infinite;
-  filter: drop-shadow(0 0 50px #bb00ff99);
-  transform-style: preserve-3d;
+#textbypass .options {
+  margin-bottom: 10px;
 }
 
-@keyframes spin3D {
-  from { transform: rotateY(0deg) rotateX(18deg) scale(1.02); }
-  to   { transform: rotateY(360deg) rotateX(18deg) scale(1.02); }
+#textbypass button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+#textbypass button:hover {
+  background-color: darkred;
+}
+
+#copyBtn {
+  font-size: 1em;
 }
 
 /* Responsywność */
@@ -144,11 +155,8 @@ p {
     font-size: 0.98rem;
   }
 
-  .lightning-container {
-    bottom: 20px;
-    left: 20px;
-    width: 90px;
-    height: 150px;
+  #textbypass textarea {
+    width: 95%;
   }
 
   .section {
