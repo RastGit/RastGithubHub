@@ -1,44 +1,93 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Strona na GitHub Pages</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Neon Hub</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-indicator"></div> <!-- płynny wskaźnik -->
-        <ul>
-            <li><a href="#home" data-section="home" class="active">Home</a></li>
-            <li><a href="#script" data-section="script">Script</a></li>
-            <li><a href="#textbypass" data-section="textbypass">TextBypass</a></li>
-            <li><a href="#ai" data-section="ai">AI</a></li>
-        </ul>
-    </nav>
 
-    <section id="home" class="section">
-        <h1>Home</h1>
-        <p>Witaj na stronie głównej. Tutaj możesz dodać treść.</p>
-    </section>
+<nav class="navbar">
+  <div class="nav-indicator"></div>
+  <ul>
+    <li><a href="#home" data-section="home" class="active">Home</a></li>
+    <li><a href="#script" data-section="script">Script</a></li>
+    <li><a href="#textbypass" data-section="textbypass">TextBypass</a></li>
+    <li><a href="#ai" data-section="ai">AI</a></li>
+  </ul>
+</nav>
 
-    <section id="script" class="section">
-        <h1>Script</h1>
-        <p>Sekcja Script. Dodaj swoje skrypty lub opis.</p>
-    </section>
+<section id="home" class="section">
+  <h1>Home</h1>
+  <p>Witaj na stronie głównej. Ciemny neonowy klimat, płynne animacje i dużo fioletu.</p>
+</section>
 
-    <section id="textbypass" class="section">
-        <h1>TextBypass</h1>
-        <p>Sekcja TextBypass. Opisz funkcjonalność.</p>
-    </section>
+<section id="script" class="section">
+  <h1>Script</h1>
+  <p>Miejsce na twoje skrypty, exploity, narzędzia – wrzucaj co chcesz.</p>
+</section>
 
-    <section id="ai" class="section">
-        <h1>AI</h1>
-        <p>Sekcja AI. Treść związana z sztuczną inteligencją.</p>
-    </section>
+<section id="textbypass" class="section">
+  <h1>TextBypass</h1>
+  <p>Sekcja do omijania filtrów, detektorów AI i innych ograniczeń tekstowych.</p>
+</section>
 
-    <div class="lightning-icon">⚡</div>
+<section id="ai" class="section">
+  <h1>AI</h1>
+  <p>Prompty, modele, triki, fine-tuning – wszystko co związane z sztuczną inteligencją.</p>
+</section>
 
-    <script src="script.js"></script>
+<div class="lightning-container">
+  <svg class="lightning-svg" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="neonglow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="5"  result="blur1"/>
+        <feGaussianBlur stdDeviation="12" result="blur2"/>
+        <feMerge>
+          <feMergeNode in="blur2"/>
+          <feMergeNode in="blur1"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <linearGradient id="boltgradient" x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%"   stop-color="#f06292" />     <!-- jasny róż-fiolet góra -->
+        <stop offset="35%"  stop-color="#d500f9" />     <!-- jasny fiolet -->
+        <stop offset="65%"  stop-color="#9c27b0" />     <!-- średni fiolet -->
+        <stop offset="100%" stop-color="#4a148c" />     <!-- ciemny fiolet dół/środek -->
+      </linearGradient>
+
+      <radialGradient id="coreglow" cx="50%" cy="50%" r="90%">
+        <stop offset="0%" stop-color="#ffffff44" />
+        <stop offset="70%" stop-color="#ffffff00" />
+      </radialGradient>
+    </defs>
+
+    <!-- główna neonowa "rurka" -->
+    <path
+      d="M 50 10 L 28 68 L 72 68 L 38 122 L 62 122 L 30 158"
+      fill="none"
+      stroke="url(#boltgradient)"
+      stroke-width="16"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      filter="url(#neonglow)"
+    />
+
+    <!-- biała / jasna poświata w środku (imitacja neonowego światła wewnątrz) -->
+    <path
+      d="M 50 10 L 28 68 L 72 68 L 38 122 L 62 122 L 30 158"
+      fill="none"
+      stroke="url(#coreglow)"
+      stroke-width="9"
+      opacity="0.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
