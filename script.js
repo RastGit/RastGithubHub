@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ────────────────────────────────────────
-  //          Poprzedni kod navbar + sekcje
-  // ────────────────────────────────────────
+  // ───────────────────────────────────────────────
+  //          Nawigacja + animacje sekcji
+  // ───────────────────────────────────────────────
 
   const sections = document.querySelectorAll('.section');
   const links = document.querySelectorAll('.navbar a');
@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', () => {
     let current = '';
-    sections.forEach(sec => {
-      if (scrollY >= sec.offsetTop - 180) current = sec.getAttribute('id');
+    sections.forEach(section => {
+      if (scrollY >= section.offsetTop - 180) {
+        current = section.getAttribute('id');
+      }
     });
     links.forEach(link => {
       link.classList.remove('active');
@@ -40,34 +42,51 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible'));
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
   }, { threshold: 0.18 });
 
   sections.forEach(sec => observer.observe(sec));
 
-  const initial = document.querySelector('.navbar a.active') || links[0];
-  if (initial) {
-    initial.classList.add('active');
-    moveIndicator(initial);
+  const initialActive = document.querySelector('.navbar a.active') || links[0];
+  if (initialActive) {
+    initialActive.classList.add('active');
+    moveIndicator(initialActive);
   }
 
-  window.addEventListener('resize', () => moveIndicator(document.querySelector('.navbar a.active')));
+  window.addEventListener('resize', () => {
+    moveIndicator(document.querySelector('.navbar a.active'));
+  });
 
-  // ────────────────────────────────────────
-  //             TEXTBYPASS – logika
-  // ────────────────────────────────────────
+  // ───────────────────────────────────────────────
+  //          TEXTBYPASS – działająca logika
+  // ───────────────────────────────────────────────
 
-  const input  = document.getElementById('inputText');
+  const input = document.getElementById('inputText');
   const output = document.getElementById('outputText');
-  const btn    = document.getElementById('bypassBtn');
-  const copy   = document.getElementById('copyBtn');
+  const bypassBtn = document.getElementById('bypassBtn');
+  const copyBtn = document.getElementById('copyBtn');
 
-  const numMap = { 'a':'4', 'e':'3', 'i':'1', 'o':'0', 's':'5', 't':'7', 'b':'8', 'g':'9' };
-  const fontMap = { /* przykładowe matematyczne czcionki – możesz rozbudować */
-    'a': '𝕒', 'b': '𝕓', 'c': '𝕔', 'd': '𝕕', 'e': '𝕖', 'f': '𝕗', 'g': '𝕘',
-    'h': '𝕙', 'i': '𝕚', 'j': '𝕛', 'k': '𝕜', 'l': '𝕝', 'm': '𝕞', 'n': '𝕟',
-    'o': '𝕠', 'p': '𝕡', 'q': '𝕢', 'r': '𝕣', 's': '𝕤', 't': '𝕥', 'u': '𝕦',
-    'v': '𝕧', 'w': '𝕨', 'x': '𝕩', 'y': '𝕪', 'z': '𝕫'
+  const leetMap = {
+    'a': '4', 'A': '4',
+    'e': '3', 'E': '3',
+    'i': '1', 'I': '1',
+    'o': '0', 'O': '0',
+    's': '5', 'S': '5',
+    't': '7', 'T': '7',
+    'b': '8', 'B': '8',
+    'g': '9', 'G': '9'
+  };
+
+  const fontMap = {
+    'a': '𝕒', 'b': '𝕓', 'c': '𝕔', 'd': '𝕕', 'e': '𝕖',
+    'f': '𝕗', 'g': '𝕘', 'h': '𝕙', 'i': '𝕚', 'j': '𝕛',
+    'k': '𝕜', 'l': '𝕝', 'm': '𝕞', 'n': '𝕟', 'o': '𝕠',
+    'p': '𝕡', 'q': '𝕢', 'r': '𝕣', 's': '𝕤', 't': '𝕥',
+    'u': '𝕦', 'v': '𝕧', 'w': '𝕨', 'x': '𝕩', 'y': '𝕪', 'z': '𝕫'
   };
 
   function bypassText(text, options) {
@@ -75,44 +94,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let result = text;
 
+    // Leet (numbers)
     if (options.numbers) {
-      result = result.split('').map(c => {
-        const lower = c.toLowerCase();
-        return numMap[lower] ? numMap[lower] : c;
-      }).join('');
+      result = result.split('').map(c => leetMap[c] || c).join('');
     }
 
+    // Font (matematyczne czcionki)
     if (options.font) {
       result = result.split('').map(c => {
         const lower = c.toLowerCase();
-        return fontMap[lower] || c;
+        if (fontMap[lower]) {
+          return c === c.toUpperCase() ? fontMap[lower].toUpperCase() : fontMap[lower];
+        }
+        return c;
       }).join('');
     }
 
+    // Similar (podstawowe homoglyphy)
     if (options.similar) {
-      // bardzo prosty przykład – można rozbudować o setki zamienników
-      result = result.replace(/a/gi, 'ɑ').replace(/o/gi, 'ο').replace(/i/gi, 'і');
+      result = result
+        .replace(/[aA]/g, 'ɑ')
+        .replace(/[eE]/g, 'е')
+        .replace(/[iI]/g, 'і')
+        .replace(/[oO]/g, 'ο')
+        .replace(/[sS]/g, 'ѕ');
     }
 
-    return result || "[nic nie wyszło – sprawdź opcje]";
+    return result.trim() || "[nic nie wyszło – zaznacz przynajmniej jedną opcję]";
   }
 
-  btn.addEventListener('click', () => {
-    const opts = {
-      numbers: document.getElementById('useNumbers').checked,
-      font:    document.getElementById('useFont').checked,
-      similar: document.getElementById('useSimilar').checked
-    };
-    output.value = bypassText(input.value, opts);
-  });
-
-  copy.addEventListener('click', () => {
-    if (!output.value.trim()) return alert("Nic do skopiowania!");
-    output.select();
-    navigator.clipboard.writeText(output.value).then(() => {
-      alert("Skopiowano!");
-    }).catch(() => {
-      alert("Błąd kopiowania – spróbuj zaznaczyć ręcznie.");
+  if (bypassBtn) {
+    bypassBtn.addEventListener('click', () => {
+      const options = {
+        numbers: document.getElementById('useNumbers')?.checked || false,
+        font: document.getElementById('useFont')?.checked || false,
+        similar: document.getElementById('useSimilar')?.checked || false
+      };
+      output.value = bypassText(input.value, options);
     });
-  });
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      if (!output.value.trim()) {
+        alert("Nie ma nic do skopiowania!");
+        return;
+      }
+      navigator.clipboard.writeText(output.value)
+        .then(() => alert("Skopiowano!"))
+        .catch(() => {
+          output.select();
+          alert("Nie udało się automatycznie – zaznacz i Ctrl+C");
+        });
+    });
+  }
 });
