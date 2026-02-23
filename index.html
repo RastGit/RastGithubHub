@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rast Hub</title>
+  <title>Dark Neon Hub</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,20 +30,23 @@
 
 <section id="textbypass" class="section">
   <h1>TextBypass</h1>
-  <p>Omijaj filtry, detektory AI, moderacje i inne ograniczenia tekstowe.</p>
+  <p>Omijaj filtry, detektory AI (np. GPTZero, Originality.ai), moderacje i inne ograniczenia tekstowe.</p>
 
   <div class="bypass-container">
     <textarea id="inputText" placeholder="Wklej tekst do bypassu..." rows="6"></textarea>
 
     <div class="options-grid">
       <label class="option-label">
-        <input type="checkbox" id="useNumbers"> Numbers (leet speak – 1 zamiast i, 3 zamiast e itp.)
+        <input type="checkbox" id="useNumbers"> Numbers (leet speak – wariacje z liczbami)
       </label>
       <label class="option-label">
-        <input type="checkbox" id="useFont"> Font (matematyczne czcionki, bold, italic, gothic itp.)
+        <input type="checkbox" id="useFont"> Font (różne czcionki matematyczne, gothic, bold itp. – losowo)
       </label>
       <label class="option-label">
-        <input type="checkbox" id="useSimilar"> Similar (podobne znaki / homoglyphs)
+        <input type="checkbox" id="useSimilar"> Similar (podobne znaki / homoglyphs + specjalne)
+      </label>
+      <label class="option-label">
+        <input type="checkbox" id="useAdvanced"> Advanced (dodatkowe triki: niewidoczne znaki, mieszanie, aby omijać GPTZero/Originality.ai)
       </label>
     </div>
 
@@ -60,6 +63,7 @@
   <p>Prompty, modele, triki, fine-tuning – wszystko co związane z sztuczną inteligencją.</p>
 </section>
 
+<script src="ai_bypass.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
