@@ -111,7 +111,7 @@ body {
 h1 {
   font-size: clamp(3.2rem, 10vw, 6.8rem);
   margin-bottom: 1.6rem;
-  background: linear-gradient(90deg, #c2185b, #7c4dff, #00bcd4, #ff4081);
+  background: linear-gradient(90deg, #c2185b, #7c4dff, #00bcd4);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -420,6 +420,74 @@ p {
   background: #9c27b0;
 }
 
+/* Crop Modal */
+.crop-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+.crop-modal.show {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.crop-content {
+  background: #1a1a2e;
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+#cropImage {
+  max-width: 100%;
+  max-height: 400px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.crop-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.crop-buttons button {
+  background: linear-gradient(135deg, #c2185b, #e91e63);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.crop-buttons button:hover {
+  background: linear-gradient(135deg, #e91e63, #ff4081);
+  transform: translateY(-2px);
+}
+
+.crop-buttons #cropCancelBtn {
+  background: linear-gradient(135deg, #4a148c, #7c4dff);
+}
+
+.crop-buttons #cropCancelBtn:hover {
+  background: linear-gradient(135deg, #7c4dff, #9c27b0);
+}
+
 /* Responsywność */
 @media (max-width: 720px) {
   .navbar ul {
@@ -455,5 +523,9 @@ p {
   #sendMessageBtn {
     width: 100%;
     padding: 14px;
+  }
+
+  .crop-content {
+    padding: 16px;
   }
 }
