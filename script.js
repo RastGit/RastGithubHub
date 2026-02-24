@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ────────────────────────────────
-  //          NAWIGACJA + ANIMACJE
-  // ────────────────────────────────
-
+  // Nawigacja + animacje
   const sections = document.querySelectorAll('.section');
   const links = document.querySelectorAll('.navbar a');
   const indicator = document.querySelector('.nav-indicator');
@@ -55,10 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('resize', () => moveIndicator(document.querySelector('.navbar a.active')));
 
-  // ────────────────────────────────
-  //          TEXTBYPASS (prosty)
-  // ────────────────────────────────
-
+  // TextBypass (prosty)
   const tbInput = document.getElementById('inputText');
   const tbOutput = document.getElementById('outputText');
   const tbBtn = document.getElementById('bypassBtn');
@@ -71,8 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tbOutput.value = "Wpisz tekst...";
         return;
       }
-
-      // Bardzo podstawowy bypass – możesz rozbudować
       text = text.replace(/a/gi, '4').replace(/e/gi, '3').replace(/i/gi, '1').replace(/o/gi, '0').replace(/s/gi, '5');
       tbOutput.value = text;
     });
@@ -85,10 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ────────────────────────────────
-  //          DISCORD – PRAWdziWY WEBHOOK
-  // ────────────────────────────────
-
+  // Discord – wysyłanie przez webhook
   const WEBHOOK = "https://discord.com/api/webhooks/1475841712600649801/0_cGBvytVMLDouODG1JysXFtNNF8zEyrsGPFaxujB5hY2xX9LgVUeiFAASfVI7Lr-4ls";
 
   const avatarPrev = document.getElementById('avatarPreview');
