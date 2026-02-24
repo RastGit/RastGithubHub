@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function moveIndicator(target) {
     if (!target || !indicator) return;
     const rect = target.getBoundingClientRect();
-    const navRect = target.closest('.navbar').getBoundingClientRect();
+    const navRect = target.closest('.navbar').getBoundingRect();
     indicator.style.width = `${rect.width + 20}px`;
     indicator.style.left  = `${rect.left - navRect.left - 10}px`;
   }
@@ -90,17 +90,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const DEFAULT_AVATAR = "https://cdn.discordapp.com/attachments/1475479234519760927/1475846320597106739/lv_0_20260224142607.jpg?ex=699ef87e&is=699da6fe&hm=fcd8285a1b8ee154a63334579d360fc6e4d655746bb12f436b67d414ca63e6dd&";
 
-  // Zmiana awatara
-  document.getElementById('avatarUpload').onclick = () => avatarIn.click();
+  let cropper;
 
-  avatarIn.onchange = e => {
-    const f = e.target.files[0];
-    if (f) {
-      const r = new FileReader();
-      r.onload = ev => avatarPrev.src = ev.target.result;
-      r.readAsDataURL(f);
+  // Otwórz modal crop po wyborze pliku
+  avatarIn.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        document.getElementById('cropImage').src = ev.target.result;
+        document.getElementById('cropModal').classList.add('show');
+
+        // Inicjalizuj Cropper.js
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(document.getElementById('cropImage'), {
+          aspectRatio: 1,
+          viewMode: 1,
+          autoCropArea: 1,
+          movable: true,
+          zoomable: true,
+          rotatable: false,
+          scalable: false,
+          cropBoxResizable: true,
+          background: true,
+          center: true
+        });
+      };
+      reader.readAsDataURL(file);
     }
-  };
+  });
+
+  // Zatwierdź crop
+  document.getElementById('cropApplyBtn').addEventListener('click', () => {
+    const cropped = cropper.getCroppedCanvas({ width: 128, height: 128 }).toDataURL();
+    avatarPrev.src = cropped;
+    closeCropModal();
+  });
+
+  // Anuluj crop
+  document.getElementById('cropCancelBtn').addEventListener('click', closeCropModal);
+
+  function closeCropModal() {
+    document.getElementById('cropModal').classList.remove('show');
+    if (cropper) cropper.destroy();
+    avatarIn.value = '';
+  }
 
   // Kopiuj invite
   copyInvite.onclick = () => {
